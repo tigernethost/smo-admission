@@ -310,39 +310,40 @@ class StudentCrudController extends CrudController
         ]);
         //----------------------------------------------------------------------------------
         // Checklist
-        // CRUD::addField([
-        //     'name'    => 'past_illnesses',
-        //     'label'   => 'What illness has child had?',
-        //     'type'    => 'checklist',
-        //     'options' => [
-        //         'chicken_pox' => 'Chicken Pox',
-        //         'dengue'      => 'Dengue',
-        //         'mumps'       => 'Mumps',
-        //         'hepatitis'   => 'Hepatitis',
-        //         'measles'     => 'Measles',
-        //         'others'      => 'Others',
-        //     ],
-        //     'tab'     => 'Health Information',
-        //     'wrapper' => ['class' => 'form-group col-md-6'],
-        // ]);
+        // Past Illnesses
+        CRUD::addField([
+            'name'    => 'past_illnesses',
+            'label'   => 'What illness has child had?',
+            'type'    => 'checklist_illness',
+            'options' => [
+                'chicken_pox' => 'Chicken Pox',
+                'dengue'      => 'Dengue',
+                'mumps'       => 'Mumps',
+                'hepatitis'   => 'Hepatitis',
+                'measles'     => 'Measles',
+                'others'      => 'Others',
+            ],
+            'tab'     => 'Health Information',
+            'wrapper' => ['class' => 'form-group col-md-6'],
+        ]);
 
-        // // Does child have frequent symptoms?
-        // CRUD::addField([
-        //     'name'    => 'frequent_symptoms',
-        //     'label'   => 'Does child have frequent',
-        //     'type'    => 'checklist',
-        //     'options' => [
-        //         'colds'       => 'Colds',
-        //         'cough'       => 'Cough',
-        //         'tonsillitis' => 'Tonsillitis',
-        //         'fever'       => 'Fever',
-        //         'influenza'   => 'Influenza',
-        //         'stomaches'   => 'Stomaches',
-        //         'others'      => 'Others',
-        //     ],
-        //     'tab'     => 'Health Information',
-        //     'wrapper' => ['class' => 'form-group col-md-6'],
-        // ]);
+        // Frequent Symptoms
+        CRUD::addField([
+            'name'    => 'frequent_symptoms',
+            'label'   => 'Does child have frequent',
+            'type'    => 'checklist_illness',
+            'options' => [
+                'colds'       => 'Colds',
+                'cough'       => 'Cough',
+                'tonsillitis' => 'Tonsillitis',
+                'fever'       => 'Fever',
+                'influenza'   => 'Influenza',
+                'stomaches'   => 'Stomaches',
+                'others'      => 'Others',
+            ],
+            'tab'     => 'Health Information',
+            'wrapper' => ['class' => 'form-group col-md-6'],
+        ]);
 
         // Yes or No
         CRUD::addField([
