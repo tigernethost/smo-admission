@@ -13,24 +13,45 @@ return new class extends Migration {
     {
         Schema::create('students', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('qbo_customer_id')->nullable();
             $table->bigInteger('studentnumber')->unique()->nullable();
+            $table->string('lrn')->nullable()->default('0000000');
             $table->date('application')->nullable();
             $table->string('schoolyear')->nullable();
+            $table->integer('department_id');
             $table->string('level_id')->nullable();
+            $table->integer('track_id')->nullable();
+            $table->integer('track_description')->nullable();
+            $table->bigInteger('course_id')->unsigned()->nullable();
+            $table->string('new_or_old');
             $table->longText('photo')->nullable(); //notsure
             $table->string('lastname')->nullable();
             $table->string('firstname')->nullable();
             $table->string('middlename')->nullable();
             $table->enum('gender', ['Male', 'Female']);
             $table->date('birthdate')->nullable();
+            $table->integer('age');
             $table->string('citizenship')->nullable();
             //$table->string('passport')->nullable();
             $table->string('birthplace')->nullable();
             $table->longText('residentialaddress')->nullable();
+            $table->string('street_number');
+            $table->string('barangay');
+            $table->string('city_municipality');
+            $table->string('province');
             $table->string('email')->nullable();
             $table->string('religion')->nullable();
             $table->longText('living')->nullable();
+            $table->string('other_relative')->nullable();
             $table->string('legalguardian')->nullable();
+            $table->string('legal_guardian_lastname')->nullable();
+            $table->string('legal_guardian_firstname')->nullable();
+            $table->string('legal_guardian_middlename')->nullable();
+            $table->string('legal_guardian_citizenship')->nullable();
+            $table->string('legal_guardian_occupation')->nullable();
+            $table->string('legal_guardian_contact_number_country_code')->nullable();
+            $table->string('legal_guardian_contact_number')->nullable();
+            $table->string('legal_guardian_email')->nullable();
             $table->string('contactnumberCountryCode')->nullable();
             $table->string('contactnumber')->nullable();
             $table->enum('readingwriting', ['Good', 'Fair', 'Limited', 'None']);
@@ -51,14 +72,19 @@ return new class extends Migration {
             $table->longText('disciplinaryproblemexplanation')->nullable();
             //-----------------
             $table->longText('previousschool')->nullable();
+            $table->string('inclusive_date')->nullable();
+            $table->boolean('is_transferee')->default(false);
             $table->longText('previousschooladdress')->nullable();
             $table->longText('schooltable')->nullable();
+            $table->longText('organizations')->nullable();
             //------------------------------------------------------------------
             $table->enum('father', ['Father', 'Step-father', 'Legal Guardian'])->nullable();
+            $table->enum('father_living_deceased', ['living', 'deceased']);
             $table->string('fatherfirstname')->nullable();
             $table->string('fatherlastname')->nullable();
             $table->string('fathermiddlename')->nullable();
             $table->string('fathercitizenship')->nullable();
+            $table->string('father_occupation')->nullable();
             //$table->string('fatherpassport')->nullable();//may mot be needed // ----not needed
             $table->string('fathervisastatus')->nullable();
             $table->longText('fatheremployer')->nullable();
@@ -68,9 +94,11 @@ return new class extends Migration {
             $table->longText('fatherschool')->nullable();
             $table->string('fatherMobileNumberCountryCode')->nullable();
             $table->string('fatherMobileNumber')->nullable();
+            $table->string('father_email')->nullable();
             $table->boolean('fatherreceivetext')->nullable();
             //-------------------------------------------------------------------
             $table->enum('mother', ['Mother', 'Step-mother', 'Legal Guardian']);
+            $table->enum('mother_living_deceased', ['living', 'deceased']);
             $table->string('motherfirstname')->nullable();
             $table->string('motherlastname')->nullable();
             $table->string('mothermiddlename')->nullable();
