@@ -239,21 +239,21 @@ class StudentCrudController extends CrudController
         CRUD::addField([
             'name' => 'birthplace',
             'label' => 'Place of Birth',
-            'type' => 'email',
+            'type' => 'text',
             'tab' => 'Student Information',
             'wrapper' => ['class' => 'form-group col-md-3'],
         ]);
         CRUD::addField([
             'name' => 'birthdate',
             'label' => 'Date of Birth',
-            'type' => 'email',
+            'type' => 'date_picker',
             'tab' => 'Student Information',
             'wrapper' => ['class' => 'form-group col-md-3'],
         ]);
         CRUD::addField([
             'name' => 'age',
             'label' => 'Age',
-            'type' => 'email',
+            'type' => 'text',
             'tab' => 'Student Information',
             'attributes' => ['readonly' => 'true'],
             'wrapper' => ['class' => 'form-group col-md-3'],
