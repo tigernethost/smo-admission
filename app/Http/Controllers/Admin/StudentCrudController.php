@@ -60,6 +60,7 @@ class StudentCrudController extends CrudController
         $this->setStudentInformationFields();
         $this->setHealthInformationFields();
         $this->setNotificationFields();
+        $this->setScholasticInfirmationFields();
         //----------------------------------------------------------------------------------
         // Checklist
         // Past Illnesses
@@ -319,10 +320,7 @@ class StudentCrudController extends CrudController
             'wrapper' => ['class' => 'form-group col-md-6 required'],
         ]);
     }
-    public function setFamilyBackgroundFields()
-    {
-
-    }
+    public function setFamilyBackgroundFields() {}
     public function setHealthInformationFields()
     {
         CRUD::addField([
@@ -563,6 +561,210 @@ class StudentCrudController extends CrudController
             'type' => 'email',
             'tab' => 'Notifications',
             'wrapper' => ['class' => 'form-group col-md-6'],
+        ]);
+    }
+
+    public function setScholasticInfirmationFields()
+    {
+        CRUD::addField([
+            'name' => 'schoollastattended',
+            'label' => 'Name of the previous School',
+            'type' => 'textarea',
+            'tab' => 'Scholastic Information',
+            // 'wrapper' => ['class' => 'form-group col-md-6'],
+        ]);
+
+        CRUD::addField([
+            'name' => 'schooladdress',
+            'label' => 'Complete address of the above School (including zip code)',
+            'type' => 'textarea',
+            'tab' => 'Scholastic Information',
+            // 'wrapper' => ['class' => 'form-group col-md-6'],
+        ]);
+
+
+        CRUD::addField([
+            'name'  => 'school_attended',
+            'label' => 'School Attended (Do Not Abbreviate)',
+            'type'  => 'table',
+            'entity_singular' => 'school', // used on the "Add school" button
+            'columns' => [
+                'department'      => 'Department',
+                'previousschool'  => 'Name of School',
+                'levelattended'   => 'Last Level Attended',
+                'yearattended'    => 'Year Attended',
+                'honorsreceived'  => 'Honors/Awards',
+            ],
+            'min' => 4,
+            // 'max' => 10, // optional
+            'tab' => 'Scholastic Information',
+            'wrapper' => ['class' => 'form-group col-md-12'],
+        ]);
+
+                CRUD::addField([
+            'name'  => 'organizatons',
+            'label' => 'Organizations / Clubs',
+            'type'  => 'table',
+            'entity_singular' => 'school', // used on the "Add school" button
+            'columns' => [
+                'organization' => 'Organization / Club',
+                'position'     => 'Position',
+                'year'         => 'Year',
+            ],
+            'min' => 1,
+            // 'max' => 10, // optional
+            'tab' => 'Scholastic Information',
+            'wrapper' => ['class' => 'form-group col-md-12'],
+        ]);
+
+
+        CRUD::addField([
+            'name' => 'reading_writing',
+            'label' => 'Reading & Writing Skills',
+            'type' => 'select_from_array',
+            'options' => [
+                'Good' => 'Good',
+                'Fair' => 'Fair',
+                'Limited' => 'Limited',
+                'None' => 'None',
+            ],
+            'allows_null' => false,
+            'default' => 'Good',
+            'tab' => 'Scholastic Information',
+            'wrapper' => ['class' => 'form-group col-md-6'],
+        ]);
+
+        CRUD::addField([
+            'name' => 'verbalproficiency',
+            'label' => 'Verbal Proficiency',
+            'type' => 'select_from_array',
+            'options' => [
+                'Good' => 'Good',
+                'Fair' => 'Fair',
+                'Limited' => 'Limited',
+                'None' => 'None',
+            ],
+            'allows_null' => false,
+            'default' => 'Good',
+            'tab' => 'Scholastic Information',
+            'wrapper' => ['class' => 'form-group col-md-6'],
+        ]);
+
+        // Major Language Select Field
+        CRUD::addField([
+            'name' => 'majorlanguages',
+            'label' => 'Major language used at home',
+            'type' => 'select_from_array',
+            'options' => [
+                'Tagalog/Filipino' => 'Tagalog/Filipino',
+                'English' => 'English',
+                'Korean' => 'Korean',
+                'Chinese' => 'Chinese',
+                'Japanese' => 'Japanese',
+                'Arabic' => 'Arabic',
+                'Other' => 'Other',
+            ],
+            'allows_null' => false,
+            'default' => 'Tagalog/Filipino',
+            'tab' => 'Scholastic Information',
+            'wrapper' => ['class' => 'form-group col-md-6'],
+            'attributes' => ['id' => 'major-language-select'],
+        ]);
+
+        CRUD::addField([
+            'name' => 'other_language_specify',
+            'label' => 'Specify Other Language:',
+            'type' => 'text',
+            'tab' => 'Scholastic Information',
+            'wrapper' => [
+                'class' => 'form-group col-md-6',
+            ],
+            'attributes' => [
+                'id' => 'other-language-input',
+                'disabled' => 'disabled',
+                'style' => 'cursor: not-allowed;',
+                'placeholder' => 'Ex. Brtish, French, etc.',
+            ],
+        ]);
+
+        CRUD::addField([
+            'name' => 'otherlanguages',
+            'label' => 'Other languages/dialects spoken',
+            'type' => 'repeatable',
+            'fields' => [
+                [
+                    'name' => 'language_name',
+                    'type' => 'text',
+                    'label' => 'Language/Dialect',
+                    'wrapper' => ['class' => 'form-group col-md-12'],
+                ],
+            ],
+            'otherlanguages' => 'Add Language/Dialect',
+            'init_rows' => 1,
+            'min_rows' => 1,
+            'tab' => 'Scholastic Information',
+            'wrapper' => ['class' => 'form-group col-md-12'],
+        ]);
+
+        CRUD::addField([
+            'name' => 'custom_script',
+            'type' => 'custom_html',
+            'value' => '<script>
+        function toggleOtherLanguageField() {
+            const select = document.getElementById("major-language-select");
+            const otherInput = document.getElementById("other-language-input");
+
+            if (select && otherInput) {
+                if (select.value === "Other") {
+                    otherInput.removeAttribute("disabled");
+                    otherInput.style.cursor = "text";
+                } else {
+                    otherInput.setAttribute("disabled", "disabled");
+                    otherInput.style.cursor = "not-allowed";
+                    otherInput.value = "";
+                }
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            toggleOtherLanguageField();
+            const select = document.getElementById("major-language-select");
+            if (select) {
+                select.addEventListener("change", toggleOtherLanguageField);
+            }
+        });
+    </script>',
+            'tab' => 'Scholastic Information',
+        ]);
+
+        CRUD::addField([
+            'name' => 'remedialhelpexplanation',
+            'label' => 'Please explain and provide latest testing results.',
+            'type' => 'textarea',
+            'tab' => 'Scholastic Information',
+            // 'wrapper' => ['class' => 'form-group col-md-6'],
+        ]);
+
+        CRUD::addField([
+            'name' => 'otherinfo',
+            'label' => 'Are there any other information you think the teacher should know about your child?',
+            'type' => 'radio',
+            'options' => [
+                1 => 'Yes',
+                0 => 'No',
+            ],
+            'tab' => 'Scholastic Information'
+        ]);
+
+        CRUD::addField([
+            'name' => 'disciplinaryproblem',
+            'label' => 'Has your child ever been asked to leave school because of any behavioral/disciplinary problems?',
+            'type' => 'radio',
+            'options' => [
+                1 => 'Yes',
+                0 => 'No',
+            ],
+            'tab' => 'Scholastic Information'
         ]);
     }
     /**
