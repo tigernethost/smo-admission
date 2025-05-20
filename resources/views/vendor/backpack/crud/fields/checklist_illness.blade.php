@@ -1,5 +1,3 @@
-{{-- checklist_illness.blade.php --}}
-
 @php
     $field['number_of_columns'] = $field['number_of_columns'] ?? 3;
     $field['show_select_all'] = $field['show_select_all'] ?? false;

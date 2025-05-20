@@ -58,6 +58,8 @@ class StudentCrudController extends CrudController
         CRUD::setValidation(StudentRequest::class);
         // CRUD::setFromDb(); // set fields from db columns.
         $this->setStudentInformationFields();
+        $this->setFamilyBackgroundFields();
+        $this->setScholasticInformationFields();
         $this->setHealthInformationFields();
         $this->setNotificationFields();
         $this->setScholasticInfirmationFields();
@@ -110,6 +112,7 @@ class StudentCrudController extends CrudController
             'type' => 'custom_html',
             'value' => '<div class="form-group col-xs-12 mb-0 p-0"></div>',
             'tab' => 'Student Information',
+            'wrapper' => ['class' => 'm-0 p-0'],
         ]);
         /////
         CRUD::addField([
@@ -174,6 +177,7 @@ class StudentCrudController extends CrudController
             'type' => 'custom_html',
             'value' => '<div class="form-group col-xs-12 mb-0 p-0"></div>',
             'tab' => 'Student Information',
+            'wrapper' => ['class' => 'm-0 p-0'],
         ]);
         /////
 
@@ -216,6 +220,7 @@ class StudentCrudController extends CrudController
             'type' => 'custom_html',
             'value' => '<div class="form-group col-xs-12 mb-0 p-0"></div>',
             'tab' => 'Student Information',
+            'wrapper' => ['class' => 'm-0 p-0'],
         ]);
         /////
 
@@ -276,6 +281,7 @@ class StudentCrudController extends CrudController
             'type' => 'custom_html',
             'value' => '<div class="form-group col-xs-12 mb-0 p-0">Residential Address In The Philippines</div>',
             'tab' => 'Student Information',
+            'wrapper' => ['class' => 'm-0 p-0'],
         ]);
         /////
 
@@ -320,7 +326,583 @@ class StudentCrudController extends CrudController
             'wrapper' => ['class' => 'form-group col-md-6 required'],
         ]);
     }
-    public function setFamilyBackgroundFields() {}
+    public function setFamilyBackgroundFields()
+    {
+        CRUD::addField([
+            'name' => 'father',
+            'label' => 'Parent',
+            'type' => 'select_from_array',
+            'options' => [
+                'Father',
+                'Step-father',
+                'Legal Guardian'
+            ],
+            'tab' => 'Family Background',
+            'allows_null' => false,
+            'wrapper' => ['class' => 'form-group col-md-5'],
+        ]);
+        CRUD::addField([   // radio
+            'name' => 'father_living_deceased', // the name of the db column
+            'label' => '', // the input label
+            'type' => 'radio',
+            'options' => [
+                // the key will be stored in the db, the value will be shown as label;
+                0 => "Living",
+                1 => "Deceased"
+            ],
+            'tab' => 'Family Background',
+            'wrapper' => ['class' => 'form-group col-md-5 pt-4'],
+            'inline' => true, // show the radios all on the same line?
+            'default' => 0
+        ]);
+        CRUD::addField([
+            'name' => 'fatherlastname',
+            'label' => 'Last Name',
+            'type' => 'text',
+            'tab' => 'Family Background',
+            'attributes' => ['required' => 'required'],
+            'wrapper' => ['class' => 'form-group col-md-4'],
+        ]);
+        CRUD::addField([
+            'name' => 'fatherfirstname',
+            'label' => 'First Name',
+            'type' => 'text',
+            'tab' => 'Family Background',
+            'attributes' => ['required' => 'required'],
+            'wrapper' => ['class' => 'form-group col-md-4'],
+        ]);
+        CRUD::addField([
+            'name' => 'fathermiddlename',
+            'label' => 'Middle Name',
+            'type' => 'text',
+            'tab' => 'Family Background',
+            'wrapper' => ['class' => 'form-group col-md-4'],
+        ]);
+        CRUD::addField([
+            'name' => 'fathercitizenship',
+            'label' => 'Citizenship',
+            'type' => 'text',
+            'tab' => 'Family Background',
+            'attributes' => ['required' => 'required'],
+            'wrapper' => ['class' => 'form-group col-md-4'],
+        ]);
+        CRUD::addField([
+            'name' => 'fathervisastatus',
+            'label' => 'Philippine Visa Status',
+            'type' => 'text',
+            'tab' => 'Family Background',
+            'attributes' => ['required' => 'required'],
+            'wrapper' => ['class' => 'form-group col-md-4'],
+        ]);
+        CRUD::addField([   // phone
+            'name' => 'phone', // db column for phone
+            'label' => 'Mobile Number',
+            'type' => 'phone',
+            'tab' => 'Family Background',
+            'wrapper' => ['class' => 'form-group col-md-4'],
+            // OPTIONALS
+            // most options provided by intlTelInput.js are supported, you can try them out using the `config` attribute;
+            //  take note that options defined in `config` will override any default values from the field;
+            'config' => [
+                'initialCountry' => 'ph', // this needs to be in the allowed country list, either in `onlyCountries` or NOT in `excludeCountries`
+                'separateDialCode' => true,
+                'nationalMode' => true,
+                'autoHideDialCode' => false,
+                'placeholderNumberType' => 'none',
+                'placeholder' => '',
+            ]
+        ]);
+        CRUD::addField([
+            'name' => 'father_occupation',
+            'label' => 'Father Occupation',
+            'type' => 'text',
+            'tab' => 'Family Background',
+            'attributes' => ['required' => 'required'],
+            'wrapper' => ['class' => 'form-group col-md-4'],
+        ]);
+        CRUD::addField([
+            'name' => 'fatheremployer',
+            'label' => 'Employer/Organization',
+            'type' => 'text',
+            'tab' => 'Family Background',
+            'attributes' => ['required' => 'required'],
+            'wrapper' => ['class' => 'form-group col-md-4'],
+        ]);
+        CRUD::addField([   // phone
+            'name' => 'fatherofficenumber', // db column for phone
+            'label' => 'Office Number',
+            'type' => 'phone',
+            'tab' => 'Family Background',
+            'wrapper' => ['class' => 'form-group col-md-4'],
+            // OPTIONALS
+            // most options provided by intlTelInput.js are supported, you can try them out using the `config` attribute;
+            //  take note that options defined in `config` will override any default values from the field;
+            'config' => [
+                'initialCountry' => 'ph', // this needs to be in the allowed country list, either in `onlyCountries` or NOT in `excludeCountries`
+                'separateDialCode' => true,
+                'nationalMode' => true,
+                'autoHideDialCode' => false,
+                'placeholderNumberType' => 'none',
+                'placeholder' => '',
+            ]
+        ]);
+        CRUD::addField([
+            'name' => 'fatherdegree',
+            'label' => 'Graduate Degree',
+            'type' => 'textarea',
+            'tab' => 'Family Background',
+            'attributes' => ['required' => 'required'],
+            'wrapper' => ['class' => 'form-group col-md-6'],
+        ]);
+        CRUD::addField([
+            'name' => 'fatherschool',
+            'label' => 'School',
+            'type' => 'textarea',
+            'tab' => 'Family Background',
+            'attributes' => ['required' => 'required'],
+            'wrapper' => ['class' => 'form-group col-md-6'],
+        ]);
+        CRUD::addField([
+            'name' => 'mother',
+            'label' => 'Parent',
+            'type' => 'select_from_array',
+            'options' => [
+                'Mother',
+                'Step-Mother',
+                'Legal Guardian'
+            ],
+            'tab' => 'Family Background',
+            'allows_null' => false,
+            'wrapper' => ['class' => 'form-group col-md-5'],
+        ]);
+        CRUD::addField([   // radio
+            'name' => 'mother_living_deceased', // the name of the db column
+            'label' => '', // the input label
+            'type' => 'radio',
+            'options' => [
+                // the key will be stored in the db, the value will be shown as label;
+                0 => "Living",
+                1 => "Deceased"
+            ],
+            'tab' => 'Family Background',
+            'wrapper' => ['class' => 'form-group col-md-5 pt-4'],
+            'inline' => true, // show the radios all on the same line?
+            'default' => 0
+        ]);
+        CRUD::addField([
+            'name' => 'motherlastname',
+            'label' => 'Last Name',
+            'type' => 'text',
+            'tab' => 'Family Background',
+            'attributes' => ['required' => 'required'],
+            'wrapper' => ['class' => 'form-group col-md-4'],
+        ]);
+        CRUD::addField([
+            'name' => 'motherfirstname',
+            'label' => 'First Name',
+            'type' => 'text',
+            'tab' => 'Family Background',
+            'attributes' => ['required' => 'required'],
+            'wrapper' => ['class' => 'form-group col-md-4'],
+        ]);
+        CRUD::addField([
+            'name' => 'mothermiddlename',
+            'label' => 'Middle Name',
+            'type' => 'text',
+            'tab' => 'Family Background',
+            'wrapper' => ['class' => 'form-group col-md-4'],
+        ]);
+        CRUD::addField([
+            'name' => 'mothercitizenship',
+            'label' => 'Citizenship',
+            'type' => 'text',
+            'tab' => 'Family Background',
+            'attributes' => ['required' => 'required'],
+            'wrapper' => ['class' => 'form-group col-md-4'],
+        ]);
+        CRUD::addField([
+            'name' => 'mothervisastatus',
+            'label' => 'Philippine Visa Status',
+            'type' => 'text',
+            'tab' => 'Family Background',
+            'attributes' => ['required' => 'required'],
+            'wrapper' => ['class' => 'form-group col-md-4'],
+        ]);
+        CRUD::addField([   // phone
+            'name' => 'mothernumber', // db column for phone
+            'label' => 'Mobile Number',
+            'type' => 'phone',
+            'tab' => 'Family Background',
+            'wrapper' => ['class' => 'form-group col-md-4'],
+            // OPTIONALS
+            // most options provided by intlTelInput.js are supported, you can try them out using the `config` attribute;
+            //  take note that options defined in `config` will override any default values from the field;
+            'config' => [
+                'initialCountry' => 'ph', // this needs to be in the allowed country list, either in `onlyCountries` or NOT in `excludeCountries`
+                'separateDialCode' => true,
+                'nationalMode' => true,
+                'autoHideDialCode' => false,
+                'placeholderNumberType' => 'none',
+                'placeholder' => '',
+            ]
+        ]);
+        CRUD::addField([
+            'name' => 'mother_occupation',
+            'label' => 'mother Occupation',
+            'type' => 'text',
+            'tab' => 'Family Background',
+            'attributes' => ['required' => 'required'],
+            'wrapper' => ['class' => 'form-group col-md-4'],
+        ]);
+        CRUD::addField([
+            'name' => 'motheremployer',
+            'label' => 'Employer/Organization',
+            'type' => 'text',
+            'tab' => 'Family Background',
+            'attributes' => ['required' => 'required'],
+            'wrapper' => ['class' => 'form-group col-md-4'],
+        ]);
+        CRUD::addField([   // phone
+            'name' => 'motherofficenumber', // db column for phone
+            'label' => 'Office Number',
+            'type' => 'phone',
+            'tab' => 'Family Background',
+            'wrapper' => ['class' => 'form-group col-md-4'],
+            // OPTIONALS
+            // most options provided by intlTelInput.js are supported, you can try them out using the `config` attribute;
+            //  take note that options defined in `config` will override any default values from the field;
+            'config' => [
+                'initialCountry' => 'ph', // this needs to be in the allowed country list, either in `onlyCountries` or NOT in `excludeCountries`
+                'separateDialCode' => true,
+                'nationalMode' => true,
+                'autoHideDialCode' => false,
+                'placeholderNumberType' => 'none',
+                'placeholder' => '',
+            ]
+        ]);
+        CRUD::addField([
+            'name' => 'motherdegree',
+            'label' => 'Graduate Degree',
+            'type' => 'textarea',
+            'tab' => 'Family Background',
+            'attributes' => ['required' => 'required'],
+            'wrapper' => ['class' => 'form-group col-md-6'],
+        ]);
+        CRUD::addField([
+            'name' => 'motherschool',
+            'label' => 'School',
+            'type' => 'textarea',
+            'tab' => 'Family Background',
+            'attributes' => ['required' => 'required'],
+            'wrapper' => ['class' => 'form-group col-md-6'],
+        ]);
+        CRUD::addField([   // radio
+            'name' => 'parents_marital_status', // the name of the db column
+            'label' => 'Marital Status of Parents:', // the input label
+            'type' => 'radio',
+            'options' => [
+                0 => 'Married',
+                1 => 'Widowed',
+                2 => 'Solo Parent',
+                3 => 'Separated',
+                4 => 'Live-in',
+                5 => 'Annulled/Divorced'
+            ],
+            'tab' => 'Family Background',
+            'wrapper' => ['class' => 'form-group'],
+            'inline' => true, // show the radios all on the same line?
+            'default' => 0
+        ]);
+        CRUD::addField([   // radio
+            'name' => 'is_child_adopted', // the name of the db column
+            'label' => 'Is child adopted?', // the input label
+            'type' => 'radio',
+            'options' => [
+                0 => 'Yes',
+                1 => 'No',
+            ],
+            'tab' => 'Family Background',
+            'wrapper' => ['class' => 'form-group'],
+            // 'inline' => true, // show the radios all on the same line?
+            'default' => 1
+        ]);
+
+        CRUD::addField([
+            'name' => 'siblings',
+            'label' => 'Siblings',
+            'type' => 'table',
+            'entity_singular' => 'sibling',
+            'columns' => [
+                'name' => 'Name',
+                'dob' => 'Date of Birth',
+                'education' => 'Educational Attainment',
+            ],
+            'min' => 1, // optional
+            'tab' => 'Family Background',
+        ]);
+        CRUD::addField([
+            'name' => 'relatives',
+            'label' => 'Relatives/household members living with the family',
+            'type' => 'table',
+            'entity_singular' => 'relative',
+            'columns' => [
+                'name' => 'Name',
+                'dob' => 'Date of Birth',
+                'education' => 'Educational Attainment',
+            ],
+            'min' => 1, // optional
+            'max' => 10, // optional
+            'tab' => 'Family Background',
+        ]);
+
+
+        /////
+        CRUD::addField([
+            'name' => 'div5',
+            'type' => 'custom_html',
+            'value' => '<div class=""><h1>LEGAL GUARDIAN INFORMATION</h1></div>',
+            'tab' => 'Family Background',
+            'wrapper' => ['class' => 'form-group col-xs-12 m-0 p-0'],
+        ]);
+        /////
+
+        CRUD::addField([
+            'name' => 'legal_guardian_lastname',
+            'label' => 'Last Name',
+            'type' => 'text',
+            'tab' => 'Family Background',
+            'attributes' => ['required' => 'required'],
+            'wrapper' => ['class' => 'form-group col-md-4'],
+        ]);
+        CRUD::addField([
+            'name' => 'legal_guardian_firstname',
+            'label' => 'First Name',
+            'type' => 'text',
+            'tab' => 'Family Background',
+            'attributes' => ['required' => 'required'],
+            'wrapper' => ['class' => 'form-group col-md-4'],
+        ]);
+        CRUD::addField([
+            'name' => 'legal_guardian_middlename',
+            'label' => 'Middle Name',
+            'type' => 'text',
+            'tab' => 'Family Background',
+            'wrapper' => ['class' => 'form-group col-md-4'],
+        ]);
+        CRUD::addField([
+            'name' => 'legal_guardian_citizenship',
+            'label' => 'Citizenship',
+            'type' => 'text',
+            'tab' => 'Family Background',
+            'attributes' => ['required' => 'required'],
+            'wrapper' => ['class' => 'form-group col-md-4'],
+        ]);
+        CRUD::addField([
+            'name' => 'legal_guardian_visastatus',
+            'label' => 'Philippine Visa Status',
+            'type' => 'text',
+            'tab' => 'Family Background',
+            'attributes' => ['required' => 'required'],
+            'wrapper' => ['class' => 'form-group col-md-4'],
+        ]);
+        CRUD::addField([   // phone
+            'name' => 'legal_guardian_contact_number', // db column for phone
+            'label' => 'Mobile Number',
+            'type' => 'phone',
+            'tab' => 'Family Background',
+            'wrapper' => ['class' => 'form-group col-md-4'],
+            // OPTIONALS
+            // most options provided by intlTelInput.js are supported, you can try them out using the `config` attribute;
+            //  take note that options defined in `config` will override any default values from the field;
+            'config' => [
+                'initialCountry' => 'ph', // this needs to be in the allowed country list, either in `onlyCountries` or NOT in `excludeCountries`
+                'separateDialCode' => true,
+                'nationalMode' => true,
+                'autoHideDialCode' => false,
+                'placeholderNumberType' => 'none',
+                'placeholder' => '',
+            ]
+        ]);
+
+        /////
+        CRUD::addField([
+            'name' => 'div6',
+            'type' => 'custom_html',
+            'value' => '<div class=""><h1>EMERGENCY CONTACT INFORMATION</h1></div>',
+            'tab' => 'Family Background',
+            'wrapper' => ['class' => 'form-group col-xs-12 m-0 p-0'],
+        ]);
+        /////
+
+        CRUD::addField([
+            'name' => 'emergencyRelationshipToChild',
+            'label' => 'Relationship To Child',
+            'type' => 'select_from_array',
+            'options' => [
+                'Father',
+                'Mother',
+                'LegalGuardian',
+                'Other',
+            ],
+            'tab' => 'Family Background',
+            'wrapper' => ['class' => 'form-group col-md-6'],
+        ]);
+
+        /////
+        CRUD::addField([
+            'name' => 'div8',
+            'type' => 'custom_html',
+            'value' => '<div class=""></div>',
+            'tab' => 'Family Background',
+            'wrapper' => ['class' => 'form-group col-xs-12 m-0 p-0'],
+        ]);
+        /////
+
+        CRUD::addField([
+            'name' => 'emergency_firstname',
+            'label' => 'First Name',
+            'type' => 'text',
+            'tab' => 'Family Background',
+            'wrapper' => ['class' => 'form-group col-md-4'],
+            'conditional_logic' => [
+                [
+                    'when' => 'emergencyRelationshipToChild',
+                    'operator' => '=',
+                    'value' => 'Other',
+                ],
+            ],
+        ]);
+        CRUD::addField([
+            'name' => 'emergency_middlename',
+            'label' => 'Middle Name',
+            'type' => 'text',
+            'tab' => 'Family Background',
+            'wrapper' => ['class' => 'form-group col-md-4'],
+            'conditional_logic' => [
+                [
+                    'when' => 'emergencyRelationshipToChild',
+                    'operator' => '=',
+                    'value' => 'Other',
+                ],
+            ],
+        ]);
+        CRUD::addField([
+            'name' => 'emergencyaddress',
+            'label' => 'Address',
+            'type' => 'text',
+            'tab' => 'Family Background',
+            'wrapper' => ['class' => 'form-group col-md-4'],
+            'conditional_logic' => [
+                [
+                    'when' => 'emergencyRelationshipToChild',
+                    'operator' => '=',
+                    'value' => 'Other',
+                ],
+            ],
+        ]);
+        CRUD::addField([   // phone
+            'name' => 'emergencymobilenumber', // db column for phone
+            'label' => 'Mobile Number',
+            'type' => 'phone',
+            'tab' => 'Family Background',
+            'wrapper' => ['class' => 'form-group col-md-4'],
+            // OPTIONALS
+            // most options provided by intlTelInput.js are supported, you can try them out using the `config` attribute;
+            //  take note that options defined in `config` will override any default values from the field;
+            'config' => [
+                'initialCountry' => 'ph', // this needs to be in the allowed country list, either in `onlyCountries` or NOT in `excludeCountries`
+                'separateDialCode' => true,
+                'nationalMode' => true,
+                'autoHideDialCode' => false,
+                'placeholderNumberType' => 'none',
+                'placeholder' => '',
+            ]
+        ]);
+        CRUD::addField([   // phone
+            'name' => 'emergencyhomephone', // db column for phone
+            'label' => 'Home Phone',
+            'type' => 'phone',
+            'tab' => 'Family Background',
+            'wrapper' => ['class' => 'form-group col-md-4'],
+            // OPTIONALS
+            // most options provided by intlTelInput.js are supported, you can try them out using the `config` attribute;
+            //  take note that options defined in `config` will override any default values from the field;
+            'config' => [
+                'initialCountry' => 'ph', // this needs to be in the allowed country list, either in `onlyCountries` or NOT in `excludeCountries`
+                'separateDialCode' => true,
+                'nationalMode' => true,
+                'autoHideDialCode' => false,
+                'placeholderNumberType' => 'none',
+                'placeholder' => '',
+            ]
+        ]);
+        CRUD::addField([
+            'name' => 'show_if_other_script',
+            'type' => 'custom_html',
+            'value' => '
+        <script>
+        setTimeout(()=>{
+            crud.field("emergencyRelationshipToChild").onChange(function(field) {
+                crud.field("emergency_firstname").show(field.value === "3");
+                crud.field("emergency_middlename").show(field.value === "3");
+                crud.field("emergencymobilenumber").show(field.value === "3");
+            }).change(); // trigger on page load
+        },500)
+        </script>
+    ',
+            'tab' => 'Family Background',
+        ]);
+        /////
+        CRUD::addField([
+            'name' => 'div7',
+            'type' => 'custom_html',
+            'value' => '<div class=""><h1>PERSON AUTHORIZED TO FETCH THE CHILD</h1></div>',
+            'tab' => 'Family Background',
+            'wrapper' => ['class' => 'form-group col-xs-12 m-0 p-0'],
+        ]);
+        /////
+
+        CRUD::addField([
+            'name' => 'authorized_person_to_fetch',
+            'label' => 'Authorized Person to Fetch',
+            'type' => 'table',
+            'entity_singular' => 'person',
+            'columns' => [
+                'name' => 'Name',
+                'relationship' => 'Relationship',
+            ],
+            'min' => 1, // optional: minimum rows
+            'tab' => 'Family Background',
+        ]);
+
+        /////
+        CRUD::addField([
+            'name' => 'div9',
+            'type' => 'custom_html',
+            'value' => '<div class=""><h3>Living</h3></div>',
+            'tab' => 'Family Background',
+            'wrapper' => ['class' => 'form-group col-xs-12 m-0 p-0'],
+        ]);
+        /////
+        CRUD::addField([
+            'name' => 'living',
+            'label' => 'The student will be living in the Philippines with (pls. check all that apply) *',
+            'type' => 'checklist_illness',
+            'options' => [
+                'Father',
+                'Mother',
+                'Step-Father',
+                'Step-Mother',
+                'Legal Guardian',
+            ],
+            'tab' => 'Family Background',
+            'wrapper' => ['class' => 'form-group col-md-4'],
+        ]);
+    }
+    public function setScholasticInformationFields()
+    {
+
+    }
     public function setHealthInformationFields()
     {
         CRUD::addField([
@@ -778,11 +1360,40 @@ class StudentCrudController extends CrudController
         $this->setupCreateOperation();
     }
 
-    public function rules()
-    {
-        return [
-            'schoolyear' => 'required|string|max:255',
-            // other rules...
-        ];
+    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation {
+        store as traitStore;
     }
+    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation {
+        update as traitUpdate;
+    }
+
+    public function store()
+    {
+        $this->decodeTableFieldsFromRequest();
+        return $this->traitStore();
+    }
+
+    public function update($id)
+    {
+        $this->decodeTableFieldsFromRequest();
+        return $this->traitUpdate($id);
+    }
+
+    private function decodeTableFieldsFromRequest()
+    {
+        $request = $this->crud->getRequest();
+        $items = $request->get('authorized_person_to_fetch'); // your repeatable field name
+
+        if (is_array($items)) {
+            $decoded = array_map(function ($item) {
+                // If you had any table fields inside each repeatable row, decode them here
+                // e.g., $item['some_table'] = json_decode($item['some_table'] ?? '', true);
+                return $item;
+            }, $items);
+
+            $request->request->set('authorized_person_to_fetch', $decoded);
+            $this->crud->setRequest($request);
+        }
+    }
+
 }
