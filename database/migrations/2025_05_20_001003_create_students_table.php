@@ -71,10 +71,12 @@ return new class extends Migration {
             $table->boolean('fatherreceivetext')->nullable();
             //-------------------------------------------------------------------
             $table->enum('mother', ['Mother', 'Step-mother', 'Legal Guardian']);
+            $table->enum('mother_living_or_deceased', ['Living', 'Deceased']);
             $table->string('motherfirstname')->nullable();
             $table->string('motherlastname')->nullable();
             $table->string('mothermiddlename')->nullable();
             $table->string('mothercitizenship')->nullable();
+            $table->string('mother_occupation')->nullable();
             //$table->string('motherpassport')->nullable(); //may mot be needed // ----not needed
             $table->string('mothervisastatus')->nullable();
             $table->longText('motheremployer')->nullable();
@@ -84,10 +86,28 @@ return new class extends Migration {
             $table->longText('motherschool')->nullable();
             $table->string('mothernumberCountryCode')->nullable();
             $table->string('mothernumber')->nullable();
+            $table->string('mother_email')->nullable();
             $table->boolean('motherreceivetext')->nullable();
+            $table->string('parents_marital_status')->nullable();
+            $table->boolean('is_child_adopted')->default(0);
+            $table->boolean('age_of_adoption')->default(0);
+            $table->boolean('is_child_know_adopted')->nullable()->default(0);
+            $table->boolean('is_stepmother')->default(0);
+            $table->boolean('is_stepfather')->default(0);
+            $table->boolean('stepfather_years')->nullable();
+            $table->string('billing_email')->nullable();
+            $table->longText('siblings')->nullable();
+            $table->longText('relatives')->nullable();
+            $table->longText('authorized_person_to_fetch')->nullable();
+            $table->boolean('stepmother_years')->nullable();
             //------------------------------------------------------------------
 
             $table->longText('emergencycontactname')->nullable();
+            $table->string('emergency_contact_other_relation_ship_to_child')->nullable();
+            $table->string('emergency_lastname')->nullable();
+            $table->string('emergency_firstname')->nullable();
+            $table->string('emergency_middlename')->nullable();
+            $table->string('emergency_citizenship')->nullable();
             $table->longText('emergencyRelationshipToChild')->nullable();
             $table->string('emergencyofficephoneCountryCode')->nullable();
             $table->string('emergencyofficephone')->nullable();
@@ -104,7 +124,10 @@ return new class extends Migration {
             $table->longText('mothersignature')->nullable();
             $table->date('date')->nullable();
             //------------------3rd page
-
+            $table->longText('past_illness')->nullable();
+            $table->boolean('past_accidents')->default(0);
+            $table->lonText('past_accidents_description')->nullable();
+            $table->longText('frequent_sickness')->nullable();
             $table->boolean('asthma')->nullable();
             $table->boolean('asthmainhaler')->nullable();
             $table->boolean('allergy')->nullable();
@@ -115,8 +138,10 @@ return new class extends Migration {
             $table->longText('drugallergyreaction')->nullable();
             $table->boolean('visionproblem')->nullable();
             $table->longText('visionproblemdescription')->nullable();
+            $table->boolean('corrective_eyeglasses')->default(0);
             $table->boolean('hearingproblem')->nullable();
             $table->longText('hearingproblemdescription')->nullable();
+            $table->boolean('hearing_aid')->default(0);
             $table->boolean('hashealthcondition')->nullable();
             $table->longText('healthcondition')->nullable();
             $table->boolean('ishospitalized')->nullable();
