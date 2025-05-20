@@ -58,252 +58,11 @@ class StudentCrudController extends CrudController
         CRUD::setValidation(StudentRequest::class);
         // CRUD::setFromDb(); // set fields from db columns.
         $this->setStudentInformationFields();
-
+        $this->setHealthInformationFields();
+        $this->setNotificationFields();
         //----------------------------------------------------------------------------------
         // Checklist
-        // CRUD::addField([
-        //     'name'    => 'past_illnesses',
-        //     'label'   => 'What illness has child had?',
-        //     'type'    => 'checklist',
-        //     'options' => [
-        //         'chicken_pox' => 'Chicken Pox',
-        //         'dengue'      => 'Dengue',
-        //         'mumps'       => 'Mumps',
-        //         'hepatitis'   => 'Hepatitis',
-        //         'measles'     => 'Measles',
-        //         'others'      => 'Others',
-        //     ],
-        //     'tab'     => 'Health Information',
-        //     'wrapper' => ['class' => 'form-group col-md-6'],
-        // ]);
-
-        // // Does child have frequent symptoms?
-        // CRUD::addField([
-        //     'name'    => 'frequent_symptoms',
-        //     'label'   => 'Does child have frequent',
-        //     'type'    => 'checklist',
-        //     'options' => [
-        //         'colds'       => 'Colds',
-        //         'cough'       => 'Cough',
-        //         'tonsillitis' => 'Tonsillitis',
-        //         'fever'       => 'Fever',
-        //         'influenza'   => 'Influenza',
-        //         'stomaches'   => 'Stomaches',
-        //         'others'      => 'Others',
-        //     ],
-        //     'tab'     => 'Health Information',
-        //     'wrapper' => ['class' => 'form-group col-md-6'],
-        // ]);
-
-        // Yes or No
-        CRUD::addField([
-            'name' => 'past_accidents',
-            'label' => 'Has child had any various accidents?',
-            'type' => 'radio',
-            'options' => [
-                1 => 'Yes',
-                0 => 'No',
-            ],
-            'tab' => 'Health Information'
-        ]);
-
-        CRUD::addField([
-            'name' => 'ishospitalized',
-            'label' => 'Does the child have been hospitalized?',
-            'type' => 'radio',
-            'options' => [
-                1 => 'Yes',
-                0 => 'No',
-            ],
-            'tab' => 'Health Information'
-        ]);
-
-        CRUD::addField([
-            'name' => 'allergy',
-            'label' => 'Is the child allergic?',
-            'type' => 'radio',
-            'options' => [
-                1 => 'Yes',
-                0 => 'No',
-            ],
-            'tab' => 'Health Information'
-        ]);
-
-        CRUD::addField([
-            'name' => 'asthma',
-            'label' => 'Asthma',
-            'type' => 'radio',
-            'options' => [
-                1 => 'Yes',
-                0 => 'No',
-            ],
-            'tab' => 'Health Information'
-        ]);
-
-        CRUD::addField([
-            'name' => 'drugallergy',
-            'label' => 'Drug Allergy',
-            'type' => 'radio',
-            'options' => [
-                1 => 'Yes',
-                0 => 'No',
-            ],
-            'tab' => 'Health Information'
-        ]);
-
-        CRUD::addField([
-            'name' => 'visionproblem',
-            'label' => 'Eye or vision problems',
-            'type' => 'radio',
-            'options' => [
-                1 => 'Yes',
-                0 => 'No',
-            ],
-            'tab' => 'Health Information'
-        ]);
-
-        CRUD::addField([
-            'name' => 'hearingproblem',
-            'label' => 'Ear or hearing problems',
-            'type' => 'radio',
-            'options' => [
-                1 => 'Yes',
-                0 => 'No',
-            ],
-            'tab' => 'Health Information'
-        ]);
-
-        CRUD::addField([
-            'name' => 'hashealthcondition',
-            'label' => 'Any other health condition that the school should be aware of (e.g epilepsy, diabetes, etc.)',
-            'type' => 'radio',
-            'options' => [
-                1 => 'Yes',
-                0 => 'No',
-            ],
-            'tab' => 'Health Information'
-        ]);
-
-        CRUD::addField([
-            'name' => 'medication',
-            'label' => 'Is the child on a regular medication?',
-            'type' => 'radio',
-            'options' => [
-                1 => 'Yes',
-                0 => 'No',
-            ],
-            'tab' => 'Health Information'
-        ]);
-
-        CRUD::addField([
-            'name' => 'schoolhourmedication',
-            'label' => 'Does child need to take any medication(s) during school hours?',
-            'type' => 'radio',
-            'options' => [
-                1 => 'Yes (if yes, a letter from the Medical Doctor must be submitted and be kept on file and medication(s) will also be kept in school, to be dispensed only by teacher or authorized person.)',
-                0 => 'No',
-            ],
-            'tab' => 'Health Information'
-        ]);
-
-        CRUD::addField([
-            'name' => 'consent_intro',
-            'type' => 'custom_html',
-            'value' => '<strong>The parent gave consent for the child to receive the following:</strong>',
-            'tab' => 'Health Information',
-            'wrapper' => ['class' => 'col-12 mb-3'],
-        ]);
-
-        CRUD::addField([
-            'name' => 'firstaidd',
-            'label' => '1. Minor first aid',
-            'type' => 'radio',
-            'options' => [
-                1 => 'Yes',
-                0 => 'No',
-            ],
-            'tab' => 'Health Information'
-        ]);
-
-        CRUD::addField([
-            'name' => 'emergencycare',
-            'label' => '2. Emergency care',
-            'type' => 'radio',
-            'options' => [
-                1 => 'Yes',
-                0 => 'No',
-            ],
-            'tab' => 'Health Information'
-        ]);
-
-        CRUD::addField([
-            'name' => 'hospitalemergencycare',
-            'label' => '3. Emergency care at the nearest hospital',
-            'type' => 'radio',
-            'options' => [
-                1 => 'Yes',
-                0 => 'No',
-            ],
-            'tab' => 'Health Information'
-        ]);
-
-        CRUD::addField([
-            'name' => 'oralmedication',
-            'label' => '4. Oral non-prescription medication',
-            'type' => 'radio',
-            'options' => [
-                1 => 'Yes',
-                0 => 'No',
-            ],
-            'tab' => 'Health Information'
-        ]);
-
-        // Notifications
-        CRUD::addField([
-            'name' => 'father_email',
-            'label' => 'Father Email',
-            'type' => 'email',
-            'tab' => 'Notifications',
-            'wrapper' => ['class' => 'form-group col-md-6'],
-        ]);
-
-        CRUD::addField([
-            'name' => 'mother_email',
-            'label' => 'Mother Email',
-            'type' => 'email',
-            'tab' => 'Notifications',
-            'wrapper' => ['class' => 'form-group col-md-6'],
-        ]);
-
-        CRUD::addField([
-            'name' => 'legal_guardian_email',
-            'label' => 'Legal Guardian Email',
-            'type' => 'email',
-            'tab' => 'Notifications',
-            'wrapper' => ['class' => 'form-group col-md-6'],
-        ]);
-
-        CRUD::addField([
-            'name' => 'emergency_email',
-            'label' => 'Emergency Email',
-            'type' => 'email',
-            'tab' => 'Notifications',
-            'wrapper' => ['class' => 'form-group col-md-6'],
-        ]);
-
-        CRUD::addField([
-            'name' => 'billing_email',
-            'label' => 'Billing Email',
-            'type' => 'email',
-            'tab' => 'Notifications',
-            'wrapper' => ['class' => 'form-group col-md-6'],
-        ]);
-
-
-        /**
-         * Fields can be defined using the fluent syntax:
-         * - CRUD::field('price')->type('number');
-         */
+        // Past Illnesses
     }
     public function setStudentInformationFields()
     {
@@ -559,152 +318,156 @@ class StudentCrudController extends CrudController
             'attributes' => ['required' => true, 'placeholder' => 'Address',],
             'wrapper' => ['class' => 'form-group col-md-6 required'],
         ]);
-        //----------------------------------------------------------------------------------
-        // Checklist
-        // Past Illnesses
+    }
+    public function setFamilyBackgroundFields()
+    {
+
+    }
+    public function setHealthInformationFields()
+    {
         CRUD::addField([
-            'name'    => 'past_illnesses',
-            'label'   => 'What illness has child had?',
-            'type'    => 'checklist_illness',
+            'name' => 'past_illnesses',
+            'label' => 'What illness has child had?',
+            'type' => 'checklist_illness',
             'options' => [
                 'chicken_pox' => 'Chicken Pox',
-                'dengue'      => 'Dengue',
-                'mumps'       => 'Mumps',
-                'hepatitis'   => 'Hepatitis',
-                'measles'     => 'Measles',
-                'others'      => 'Others',
+                'dengue' => 'Dengue',
+                'mumps' => 'Mumps',
+                'hepatitis' => 'Hepatitis',
+                'measles' => 'Measles',
+                'others' => 'Others',
             ],
-            'tab'     => 'Health Information',
+            'tab' => 'Health Information',
             'wrapper' => ['class' => 'form-group col-md-6'],
         ]);
 
         // Frequent Symptoms
         CRUD::addField([
-            'name'    => 'frequent_symptoms',
-            'label'   => 'Does child have frequent',
-            'type'    => 'checklist_illness',
+            'name' => 'frequent_symptoms',
+            'label' => 'Does child have frequent',
+            'type' => 'checklist_illness',
             'options' => [
-                'colds'       => 'Colds',
-                'cough'       => 'Cough',
+                'colds' => 'Colds',
+                'cough' => 'Cough',
                 'tonsillitis' => 'Tonsillitis',
-                'fever'       => 'Fever',
-                'influenza'   => 'Influenza',
-                'stomaches'   => 'Stomaches',
-                'others'      => 'Others',
+                'fever' => 'Fever',
+                'influenza' => 'Influenza',
+                'stomaches' => 'Stomaches',
+                'others' => 'Others',
             ],
-            'tab'     => 'Health Information',
+            'tab' => 'Health Information',
             'wrapper' => ['class' => 'form-group col-md-6'],
         ]);
 
         // Yes or No
         CRUD::addField([
-            'name'    => 'past_accidents',
-            'label'   => 'Has child had any various accidents?',
-            'type'    => 'radio',
+            'name' => 'past_accidents',
+            'label' => 'Has child had any various accidents?',
+            'type' => 'radio',
             'options' => [
                 1 => 'Yes',
                 0 => 'No',
             ],
-            'tab'     => 'Health Information'
+            'tab' => 'Health Information'
         ]);
 
         CRUD::addField([
-            'name'    => 'ishospitalized',
-            'label'   => 'Does the child have been hospitalized?',
-            'type'    => 'radio',
+            'name' => 'ishospitalized',
+            'label' => 'Does the child have been hospitalized?',
+            'type' => 'radio',
             'options' => [
                 1 => 'Yes',
                 0 => 'No',
             ],
-            'tab'     => 'Health Information'
+            'tab' => 'Health Information'
         ]);
 
         CRUD::addField([
-            'name'    => 'allergy',
-            'label'   => 'Is the child allergic?',
-            'type'    => 'radio',
+            'name' => 'allergy',
+            'label' => 'Is the child allergic?',
+            'type' => 'radio',
             'options' => [
                 1 => 'Yes',
                 0 => 'No',
             ],
-            'tab'     => 'Health Information'
+            'tab' => 'Health Information'
         ]);
 
         CRUD::addField([
-            'name'    => 'asthma',
-            'label'   => 'Asthma',
-            'type'    => 'radio',
+            'name' => 'asthma',
+            'label' => 'Asthma',
+            'type' => 'radio',
             'options' => [
                 1 => 'Yes',
                 0 => 'No',
             ],
-            'tab'     => 'Health Information'
+            'tab' => 'Health Information'
         ]);
 
         CRUD::addField([
-            'name'    => 'drugallergy',
-            'label'   => 'Drug Allergy',
-            'type'    => 'radio',
+            'name' => 'drugallergy',
+            'label' => 'Drug Allergy',
+            'type' => 'radio',
             'options' => [
                 1 => 'Yes',
                 0 => 'No',
             ],
-            'tab'     => 'Health Information'
+            'tab' => 'Health Information'
         ]);
 
         CRUD::addField([
-            'name'    => 'visionproblem',
-            'label'   => 'Eye or vision problems',
-            'type'    => 'radio',
+            'name' => 'visionproblem',
+            'label' => 'Eye or vision problems',
+            'type' => 'radio',
             'options' => [
                 1 => 'Yes',
                 0 => 'No',
             ],
-            'tab'     => 'Health Information'
+            'tab' => 'Health Information'
         ]);
 
         CRUD::addField([
-            'name'    => 'hearingproblem',
-            'label'   => 'Ear or hearing problems',
-            'type'    => 'radio',
+            'name' => 'hearingproblem',
+            'label' => 'Ear or hearing problems',
+            'type' => 'radio',
             'options' => [
                 1 => 'Yes',
                 0 => 'No',
             ],
-            'tab'     => 'Health Information'
+            'tab' => 'Health Information'
         ]);
 
         CRUD::addField([
-            'name'    => 'hashealthcondition',
-            'label'   => 'Any other health condition that the school should be aware of (e.g epilepsy, diabetes, etc.)',
-            'type'    => 'radio',
+            'name' => 'hashealthcondition',
+            'label' => 'Any other health condition that the school should be aware of (e.g epilepsy, diabetes, etc.)',
+            'type' => 'radio',
             'options' => [
                 1 => 'Yes',
                 0 => 'No',
             ],
-            'tab'     => 'Health Information'
+            'tab' => 'Health Information'
         ]);
 
         CRUD::addField([
-            'name'    => 'medication',
-            'label'   => 'Is the child on a regular medication?',
-            'type'    => 'radio',
+            'name' => 'medication',
+            'label' => 'Is the child on a regular medication?',
+            'type' => 'radio',
             'options' => [
                 1 => 'Yes',
                 0 => 'No',
             ],
-            'tab'     => 'Health Information'
+            'tab' => 'Health Information'
         ]);
 
         CRUD::addField([
-            'name'    => 'schoolhourmedication',
-            'label'   => 'Does child need to take any medication(s) during school hours?',
-            'type'    => 'radio',
+            'name' => 'schoolhourmedication',
+            'label' => 'Does child need to take any medication(s) during school hours?',
+            'type' => 'radio',
             'options' => [
                 1 => 'Yes (if yes, a letter from the Medical Doctor must be submitted and be kept on file and medication(s) will also be kept in school, to be dispensed only by teacher or authorized person.)',
                 0 => 'No',
             ],
-            'tab'     => 'Health Information'
+            'tab' => 'Health Information'
         ]);
 
         CRUD::addField([
@@ -716,49 +479,51 @@ class StudentCrudController extends CrudController
         ]);
 
         CRUD::addField([
-            'name'    => 'firstaidd',
-            'label'   => '1. Minor first aid',
-            'type'    => 'radio',
+            'name' => 'firstaidd',
+            'label' => '1. Minor first aid',
+            'type' => 'radio',
             'options' => [
                 1 => 'Yes',
                 0 => 'No',
             ],
-            'tab'     => 'Health Information'
+            'tab' => 'Health Information'
         ]);
 
         CRUD::addField([
-            'name'    => 'emergencycare',
-            'label'   => '2. Emergency care',
-            'type'    => 'radio',
+            'name' => 'emergencycare',
+            'label' => '2. Emergency care',
+            'type' => 'radio',
             'options' => [
                 1 => 'Yes',
                 0 => 'No',
             ],
-            'tab'     => 'Health Information'
+            'tab' => 'Health Information'
         ]);
 
         CRUD::addField([
-            'name'    => 'hospitalemergencycare',
-            'label'   => '3. Emergency care at the nearest hospital',
-            'type'    => 'radio',
+            'name' => 'hospitalemergencycare',
+            'label' => '3. Emergency care at the nearest hospital',
+            'type' => 'radio',
             'options' => [
                 1 => 'Yes',
                 0 => 'No',
             ],
-            'tab'     => 'Health Information'
+            'tab' => 'Health Information'
         ]);
 
         CRUD::addField([
-            'name'    => 'oralmedication',
-            'label'   => '4. Oral non-prescription medication',
-            'type'    => 'radio',
+            'name' => 'oralmedication',
+            'label' => '4. Oral non-prescription medication',
+            'type' => 'radio',
             'options' => [
                 1 => 'Yes',
                 0 => 'No',
             ],
-            'tab'     => 'Health Information'
+            'tab' => 'Health Information'
         ]);
-
+    }
+    public function setNotificationFields()
+    {
         // Notifications
         CRUD::addField([
             'name' => 'father_email',
@@ -799,12 +564,6 @@ class StudentCrudController extends CrudController
             'tab' => 'Notifications',
             'wrapper' => ['class' => 'form-group col-md-6'],
         ]);
-
-
-        /**
-         * Fields can be defined using the fluent syntax:
-         * - CRUD::field('price')->type('number');
-         */
     }
     /**
      * Define what happens when the Update operation is loaded.
