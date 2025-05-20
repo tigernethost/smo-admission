@@ -256,7 +256,7 @@ class StudentCrudController extends CrudController
             'type' => 'text',
             'tab' => 'Student Information',
             'attributes' => ['readonly' => 'true'],
-            'wrapper' => ['class' => 'form-group col-md-3'],
+            'wrapper' => ['class' => 'form-group col-md-1'],
         ]);
 
         /////
@@ -302,7 +302,7 @@ class StudentCrudController extends CrudController
         ]);
         CRUD::addField([
             'name' => 'residentialaddress',
-            // 'label' => 'Barangay',
+            'label' => '',
             'type' => 'text',
             'tab' => 'Student Information',
             'attributes' => ['required'=> true, 'placeholder'=>'Address',],
