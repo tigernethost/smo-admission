@@ -152,7 +152,7 @@ return new class extends Migration {
             //------------------3rd page
             $table->longText('past_illness')->nullable();
             $table->boolean('past_accidents')->default(0);
-            $table->lonText('past_accidents_description')->nullable();
+            $table->longText('past_accidents_description')->nullable();
             $table->longText('frequent_sickness')->nullable();
             $table->boolean('asthma')->nullable();
             $table->boolean('asthmainhaler')->nullable();
