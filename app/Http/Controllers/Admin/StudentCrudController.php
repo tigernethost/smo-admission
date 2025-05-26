@@ -937,7 +937,7 @@ class StudentCrudController extends CrudController
         ]);
 
         CRUD::addField([
-            'name'  => 'other_past_illnesses_script',
+            'name'  => 'other_frequent_symptoms_script',
             'type'  => 'custom_html',
             'value' => '<script>
             function toggleFrequentSymptomsOtherInput() {
