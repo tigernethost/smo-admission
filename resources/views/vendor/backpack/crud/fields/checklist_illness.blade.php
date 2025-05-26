@@ -59,44 +59,62 @@
             }
         });
 
-        checkboxes.on('click', function () {
+        function updateHiddenInput() {
             let values = checkboxes.filter(':checked').map(function () {
                 return $(this).val();
             }).get();
             hidden_input.val(JSON.stringify(values)).trigger('change');
+        }
 
-            toggleSelectAnchors();
-        });
-
-        let selectAll = () => {
-            checkboxes.prop('checked', true);
-            hidden_input.val(JSON.stringify(checkboxes.map(function () {
-                return $(this).val();
-            }).get())).trigger('change');
-            toggleSelectAnchors();
-        };
-
-        let unselectAll = () => {
-            checkboxes.prop('checked', false);
-            hidden_input.val(JSON.stringify([])).trigger('change');
-            toggleSelectAnchors();
-        };
-
-        let toggleSelectAnchors = () => {
+        function toggleSelectAnchors() {
             if (!showSelectAll) return;
             let allChecked = checkboxes.length === checkboxes.filter(':checked').length;
             selectAllAnchor.toggleClass('d-none', allChecked);
             unselectAllAnchor.toggleClass('d-none', !allChecked);
-        };
+        }
+
+        function toggleOthersInput() {
+            const othersCheckbox = checkboxes.filter('[value="Others"]');
+            const othersInput = $('#skills_others');
+
+            console.log("Others checkbox found:", othersCheckbox.length);
+            console.log("Others checkbox is checked:", othersCheckbox.is(':checked'));
+
+            if (othersCheckbox.is(':checked')) {
+                othersInput.prop('disabled', false);
+            } else {
+                othersInput.prop('disabled', true).val('');
+            }
+        }
+
+        checkboxes.on('click', function () {
+            updateHiddenInput();
+            toggleSelectAnchors();
+            toggleOthersInput();
+        });
 
         if (showSelectAll) {
-            selectAllAnchor.on('click', selectAll);
-            unselectAllAnchor.on('click', unselectAll);
+            selectAllAnchor.on('click', function () {
+                checkboxes.prop('checked', true);
+                updateHiddenInput();
+                toggleSelectAnchors();
+                toggleOthersInput();
+            });
+
+            unselectAllAnchor.on('click', function () {
+                checkboxes.prop('checked', false);
+                updateHiddenInput();
+                toggleSelectAnchors();
+                toggleOthersInput();
+            });
+
             toggleSelectAnchors();
         }
 
         hidden_input.on('CrudField:disable', () => checkboxes.prop('disabled', true));
         hidden_input.on('CrudField:enable', () => checkboxes.prop('disabled', false));
+
+        toggleOthersInput(); // initialize once
     }
 </script>
 @endBassetBlock

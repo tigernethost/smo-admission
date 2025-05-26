@@ -62,7 +62,6 @@ class StudentCrudController extends CrudController
         $this->setScholasticInformationFields();
         $this->setHealthInformationFields();
         $this->setNotificationFields();
-        $this->setScholasticInfirmationFields();
         //----------------------------------------------------------------------------------
         // Checklist
         // Past Illnesses
@@ -899,51 +898,141 @@ class StudentCrudController extends CrudController
             'wrapper' => ['class' => 'form-group col-md-4'],
         ]);
     }
-    public function setScholasticInformationFields()
-    {
-
-    }
+    //Health Information Fields
     public function setHealthInformationFields()
     {
+        // Past Illnesses
         CRUD::addField([
-            'name' => 'past_illnesses',
-            'label' => 'What illness has child had?',
-            'type' => 'checklist_illness',
+            'name'  => 'other_past_illnesses_script',
+            'type'  => 'custom_html',
+            'value' => '<script>
+            function togglePastIllnessesOtherInput() {
+                const illnessCheckboxes = document.querySelectorAll(".checklist-options-container input[type=checkbox]");
+                const otherInput = document.getElementById("past_illnesses_others");
+
+                let checkedValues = Array.from(illnessCheckboxes)
+                    .filter(cb => cb.checked)
+                    .map(cb => cb.value);
+
+                const selectedThreeOrMore = checkedValues.length >= 3;
+                const selectedOthers = checkedValues.includes("others");
+
+                if (selectedThreeOrMore || selectedOthers) {
+                    otherInput.disabled = false;
+                    otherInput.style.cursor = "text";
+                } else {
+                    otherInput.disabled = true;
+                    otherInput.style.cursor = "not-allowed";
+                    otherInput.value = "";
+                }
+            }
+
+            document.addEventListener("DOMContentLoaded", function () {
+                togglePastIllnessesOtherInput();
+                const illnessCheckboxes = document.querySelectorAll(".checklist-options-container input[type=checkbox]");
+                illnessCheckboxes.forEach(cb => cb.addEventListener("change", togglePastIllnessesOtherInput));
+            });
+            </script>',
+            'tab' => 'Health Information',
+        ]);
+
+        CRUD::addField([
+            'name'  => 'other_past_illnesses_script',
+            'type'  => 'custom_html',
+            'value' => '<script>
+            function toggleFrequentSymptomsOtherInput() {
+                const FrequentSymptomsCheckboxes = document.querySelectorAll(".checklist-options-container input[type=checkbox]");
+                const otherInput = document.getElementById("frequent_sickness_others");
+
+                let checkedValues = Array.from(FrequentSymptomsCheckboxes)
+                    .filter(cb => cb.checked)
+                    .map(cb => cb.value);
+
+                const selectedThreeOrMore = checkedValues.length >= 3;
+                const selectedOthers = checkedValues.includes("others");
+
+                if (selectedThreeOrMore || selectedOthers) {
+                    otherInput.disabled = false;
+                    otherInput.style.cursor = "text";
+                } else {
+                    otherInput.disabled = true;
+                    otherInput.style.cursor = "not-allowed";
+                    otherInput.value = "";
+                }
+            }
+
+            document.addEventListener("DOMContentLoaded", function () {
+                toggleFrequentSymptomsOtherInput();
+                const illnessCheckboxes = document.querySelectorAll(".checklist-options-container input[type=checkbox]");
+                illnessCheckboxes.forEach(cb => cb.addEventListener("change", toggleFrequentSymptomsOtherInput));
+            });
+            </script>',
+            'tab' => 'Health Information',
+        ]);
+
+        CRUD::addField([
+            'name'    => 'past_illnesses',
+            'label'   => 'What illness has child had?',
+            'type'    => 'checklist_illness',
             'options' => [
                 'chicken_pox' => 'Chicken Pox',
-                'dengue' => 'Dengue',
-                'mumps' => 'Mumps',
-                'hepatitis' => 'Hepatitis',
-                'measles' => 'Measles',
-                'others' => 'Others',
+                'dengue'      => 'Dengue',
+                'mumps'       => 'Mumps',
+                'hepatitis'   => 'Hepatitis',
+                'measles'     => 'Measles',
+                'others'      => 'Others',
             ],
-            'tab' => 'Health Information',
+            'tab'     => 'Health Information',
             'wrapper' => ['class' => 'form-group col-md-6'],
         ]);
 
         // Frequent Symptoms
         CRUD::addField([
-            'name' => 'frequent_symptoms',
-            'label' => 'Does child have frequent',
-            'type' => 'checklist_illness',
+            'name'    => 'frequent_symptoms',
+            'label'   => 'Does child have frequent',
+            'type'    => 'checklist_illness',
             'options' => [
-                'colds' => 'Colds',
-                'cough' => 'Cough',
+                'colds'       => 'Colds',
+                'cough'       => 'Cough',
                 'tonsillitis' => 'Tonsillitis',
-                'fever' => 'Fever',
-                'influenza' => 'Influenza',
-                'stomaches' => 'Stomaches',
-                'others' => 'Others',
+                'fever'       => 'Fever',
+                'influenza'   => 'Influenza',
+                'stomaches'   => 'Stomaches',
+                'others'      => 'Others',
             ],
-            'tab' => 'Health Information',
+            'tab'     => 'Health Information',
+            'wrapper' => ['class' => 'form-group col-md-6'],
+        ]);
+
+        CRUD::addField([
+            'name'       => 'past_illnesses_others',
+            'label'      => 'Other(s)',
+            'type'       => 'text',
+            'attributes' => [
+                'id'       => 'past_illnesses_others',
+                'disabled' => 'disabled',
+            ],
+            'tab'     => 'Health Information',
+            'wrapper' => ['class' => 'form-group col-md-6'],
+        ]);
+
+        CRUD::addField([
+            'name'       => 'frequent_sickness_others',
+            'label'      => 'Other(s)',
+            'type'       => 'text',
+            'attributes' => [
+                'id'       => 'frequent_sickness_others',
+                'disabled' => 'disabled',
+            ],
+            'tab'     => 'Health Information',
             'wrapper' => ['class' => 'form-group col-md-6'],
         ]);
 
         // Yes or No
         CRUD::addField([
-            'name' => 'past_accidents',
-            'label' => 'Has child had any various accidents?',
-            'type' => 'radio',
+            'name'    => 'past_accidents',
+            'label'   => 'Has child had any various accidents?',
+            'type'    => 'radio',
             'options' => [
                 1 => 'Yes',
                 0 => 'No',
@@ -952,9 +1041,9 @@ class StudentCrudController extends CrudController
         ]);
 
         CRUD::addField([
-            'name' => 'ishospitalized',
-            'label' => 'Does the child have been hospitalized?',
-            'type' => 'radio',
+            'name'    => 'ishospitalized',
+            'label'   => 'Does the child have been hospitalized?',
+            'type'    => 'radio',
             'options' => [
                 1 => 'Yes',
                 0 => 'No',
@@ -963,9 +1052,9 @@ class StudentCrudController extends CrudController
         ]);
 
         CRUD::addField([
-            'name' => 'allergy',
-            'label' => 'Is the child allergic?',
-            'type' => 'radio',
+            'name'    => 'allergy',
+            'label'   => 'Is the child allergic?',
+            'type'    => 'radio',
             'options' => [
                 1 => 'Yes',
                 0 => 'No',
@@ -974,9 +1063,9 @@ class StudentCrudController extends CrudController
         ]);
 
         CRUD::addField([
-            'name' => 'asthma',
-            'label' => 'Asthma',
-            'type' => 'radio',
+            'name'    => 'asthma',
+            'label'   => 'Asthma',
+            'type'    => 'radio',
             'options' => [
                 1 => 'Yes',
                 0 => 'No',
@@ -985,9 +1074,9 @@ class StudentCrudController extends CrudController
         ]);
 
         CRUD::addField([
-            'name' => 'drugallergy',
-            'label' => 'Drug Allergy',
-            'type' => 'radio',
+            'name'    => 'drugallergy',
+            'label'   => 'Drug Allergy',
+            'type'    => 'radio',
             'options' => [
                 1 => 'Yes',
                 0 => 'No',
@@ -996,9 +1085,9 @@ class StudentCrudController extends CrudController
         ]);
 
         CRUD::addField([
-            'name' => 'visionproblem',
-            'label' => 'Eye or vision problems',
-            'type' => 'radio',
+            'name'    => 'visionproblem',
+            'label'   => 'Eye or vision problems',
+            'type'    => 'radio',
             'options' => [
                 1 => 'Yes',
                 0 => 'No',
@@ -1007,9 +1096,9 @@ class StudentCrudController extends CrudController
         ]);
 
         CRUD::addField([
-            'name' => 'hearingproblem',
-            'label' => 'Ear or hearing problems',
-            'type' => 'radio',
+            'name'    => 'hearingproblem',
+            'label'   => 'Ear or hearing problems',
+            'type'    => 'radio',
             'options' => [
                 1 => 'Yes',
                 0 => 'No',
@@ -1018,9 +1107,9 @@ class StudentCrudController extends CrudController
         ]);
 
         CRUD::addField([
-            'name' => 'hashealthcondition',
-            'label' => 'Any other health condition that the school should be aware of (e.g epilepsy, diabetes, etc.)',
-            'type' => 'radio',
+            'name'    => 'hashealthcondition',
+            'label'   => 'Any other health condition that the school should be aware of (e.g epilepsy, diabetes, etc.)',
+            'type'    => 'radio',
             'options' => [
                 1 => 'Yes',
                 0 => 'No',
@@ -1029,9 +1118,9 @@ class StudentCrudController extends CrudController
         ]);
 
         CRUD::addField([
-            'name' => 'medication',
-            'label' => 'Is the child on a regular medication?',
-            'type' => 'radio',
+            'name'    => 'medication',
+            'label'   => 'Is the child on a regular medication?',
+            'type'    => 'radio',
             'options' => [
                 1 => 'Yes',
                 0 => 'No',
@@ -1040,9 +1129,9 @@ class StudentCrudController extends CrudController
         ]);
 
         CRUD::addField([
-            'name' => 'schoolhourmedication',
-            'label' => 'Does child need to take any medication(s) during school hours?',
-            'type' => 'radio',
+            'name'    => 'schoolhourmedication',
+            'label'   => 'Does child need to take any medication(s) during school hours?',
+            'type'    => 'radio',
             'options' => [
                 1 => 'Yes (if yes, a letter from the Medical Doctor must be submitted and be kept on file and medication(s) will also be kept in school, to be dispensed only by teacher or authorized person.)',
                 0 => 'No',
@@ -1051,17 +1140,17 @@ class StudentCrudController extends CrudController
         ]);
 
         CRUD::addField([
-            'name' => 'consent_intro',
-            'type' => 'custom_html',
-            'value' => '<strong>The parent gave consent for the child to receive the following:</strong>',
-            'tab' => 'Health Information',
+            'name'    => 'consent_intro',
+            'type'    => 'custom_html',
+            'value'   => '<strong>The parent gave consent for the child to receive the following:</strong>',
+            'tab'     => 'Health Information',
             'wrapper' => ['class' => 'col-12 mb-3'],
         ]);
 
         CRUD::addField([
-            'name' => 'firstaidd',
-            'label' => '1. Minor first aid',
-            'type' => 'radio',
+            'name'    => 'firstaidd',
+            'label'   => '1. Minor first aid',
+            'type'    => 'radio',
             'options' => [
                 1 => 'Yes',
                 0 => 'No',
@@ -1070,9 +1159,9 @@ class StudentCrudController extends CrudController
         ]);
 
         CRUD::addField([
-            'name' => 'emergencycare',
-            'label' => '2. Emergency care',
-            'type' => 'radio',
+            'name'    => 'emergencycare',
+            'label'   => '2. Emergency care',
+            'type'    => 'radio',
             'options' => [
                 1 => 'Yes',
                 0 => 'No',
@@ -1081,9 +1170,9 @@ class StudentCrudController extends CrudController
         ]);
 
         CRUD::addField([
-            'name' => 'hospitalemergencycare',
-            'label' => '3. Emergency care at the nearest hospital',
-            'type' => 'radio',
+            'name'    => 'hospitalemergencycare',
+            'label'   => '3. Emergency care at the nearest hospital',
+            'type'    => 'radio',
             'options' => [
                 1 => 'Yes',
                 0 => 'No',
@@ -1092,9 +1181,9 @@ class StudentCrudController extends CrudController
         ]);
 
         CRUD::addField([
-            'name' => 'oralmedication',
-            'label' => '4. Oral non-prescription medication',
-            'type' => 'radio',
+            'name'    => 'oralmedication',
+            'label'   => '4. Oral non-prescription medication',
+            'type'    => 'radio',
             'options' => [
                 1 => 'Yes',
                 0 => 'No',
@@ -1102,235 +1191,310 @@ class StudentCrudController extends CrudController
             'tab' => 'Health Information'
         ]);
     }
+
+    // Notification Fields
     public function setNotificationFields()
     {
-        // Notifications
+
         CRUD::addField([
-            'name' => 'father_email',
-            'label' => 'Father Email',
-            'type' => 'email',
-            'tab' => 'Notifications',
+            'name'    => 'father_email',
+            'label'   => 'Father Email',
+            'type'    => 'email',
+            'tab'     => 'Notifications',
             'wrapper' => ['class' => 'form-group col-md-6'],
         ]);
 
         CRUD::addField([
-            'name' => 'mother_email',
-            'label' => 'Mother Email',
-            'type' => 'email',
-            'tab' => 'Notifications',
+            'name'    => 'mother_email',
+            'label'   => 'Mother Email',
+            'type'    => 'email',
+            'tab'     => 'Notifications',
             'wrapper' => ['class' => 'form-group col-md-6'],
         ]);
 
         CRUD::addField([
-            'name' => 'legal_guardian_email',
-            'label' => 'Legal Guardian Email',
-            'type' => 'email',
-            'tab' => 'Notifications',
+            'name'    => 'legal_guardian_email',
+            'label'   => 'Legal Guardian Email',
+            'type'    => 'email',
+            'tab'     => 'Notifications',
             'wrapper' => ['class' => 'form-group col-md-6'],
         ]);
 
         CRUD::addField([
-            'name' => 'emergency_email',
-            'label' => 'Emergency Email',
-            'type' => 'email',
-            'tab' => 'Notifications',
+            'name'    => 'emergency_email',
+            'label'   => 'Emergency Email',
+            'type'    => 'email',
+            'tab'     => 'Notifications',
             'wrapper' => ['class' => 'form-group col-md-6'],
         ]);
 
         CRUD::addField([
-            'name' => 'billing_email',
-            'label' => 'Billing Email',
-            'type' => 'email',
-            'tab' => 'Notifications',
+            'name'    => 'billing_email',
+            'label'   => 'Billing Email',
+            'type'    => 'email',
+            'tab'     => 'Notifications',
             'wrapper' => ['class' => 'form-group col-md-6'],
         ]);
     }
 
-    public function setScholasticInfirmationFields()
+    public function setScholasticInformationFields()
     {
         CRUD::addField([
-            'name' => 'schoollastattended',
+            'name'  => 'previousschool',
             'label' => 'Name of the previous School',
-            'type' => 'textarea',
-            'tab' => 'Scholastic Information',
+            'type'  => 'textarea',
+            'tab'   => 'Scholastic Information',
             // 'wrapper' => ['class' => 'form-group col-md-6'],
         ]);
 
         CRUD::addField([
-            'name' => 'schooladdress',
+            'name'  => 'previousschooladdress',
             'label' => 'Complete address of the above School (including zip code)',
-            'type' => 'textarea',
-            'tab' => 'Scholastic Information',
+            'type'  => 'textarea',
+            'tab'   => 'Scholastic Information',
             // 'wrapper' => ['class' => 'form-group col-md-6'],
         ]);
 
-
         CRUD::addField([
-            'name'  => 'school_attended',
-            'label' => 'School Attended (Do Not Abbreviate)',
-            'type'  => 'table',
-            'entity_singular' => 'school', // used on the "Add school" button
-            'columns' => [
-                'department'      => 'Department',
-                'previousschool'  => 'Name of School',
-                'levelattended'   => 'Last Level Attended',
-                'yearattended'    => 'Year Attended',
-                'honorsreceived'  => 'Honors/Awards',
+            'name'            => 'schooltable',
+            'label'           => 'School Attended (Do Not Abbreviate)',
+            'type'            => 'table',
+            'entity_singular' => 'school',
+            'columns'         => [
+                'department'     => 'Department',
+                'previousschool' => 'Name of School',
+                'levelattended'  => 'Last Level Attended',
+                'yearattended'   => 'Year Attended',
+                'honorsreceived' => 'Honors/Awards',
             ],
             'min' => 4,
             // 'max' => 10, // optional
-            'tab' => 'Scholastic Information',
+            'tab'     => 'Scholastic Information',
             'wrapper' => ['class' => 'form-group col-md-12'],
         ]);
 
-                CRUD::addField([
-            'name'  => 'organizatons',
-            'label' => 'Organizations / Clubs',
-            'type'  => 'table',
-            'entity_singular' => 'school', // used on the "Add school" button
-            'columns' => [
+        CRUD::addField([
+            'name'            => 'organizatons',
+            'label'           => 'Organizations / Clubs',
+            'type'            => 'table',
+            'entity_singular' => 'line',
+            'columns'         => [
                 'organization' => 'Organization / Club',
                 'position'     => 'Position',
                 'year'         => 'Year',
             ],
             'min' => 1,
             // 'max' => 10, // optional
-            'tab' => 'Scholastic Information',
+            'tab'     => 'Scholastic Information',
             'wrapper' => ['class' => 'form-group col-md-12'],
         ]);
 
-
+        // Special Skills checklist
         CRUD::addField([
-            'name' => 'reading_writing',
-            'label' => 'Reading & Writing Skills',
-            'type' => 'select_from_array',
+            'name'    => 'skills',
+            'label'   => 'Special Skills:',
+            'type'    => 'checklist_illness', // custom field
             'options' => [
-                'Good' => 'Good',
-                'Fair' => 'Fair',
-                'Limited' => 'Limited',
-                'None' => 'None',
+                'Computer'          => 'Computer',
+                'Compution Writing' => 'Compution Writing',
+                'Dancing'           => 'Dancing',
+                'Singing'           => 'Singing',
+                'Cooking'           => 'Cooking',
+                'Poem Writing'      => 'Poem Writing',
+                'Public Speaking'   => 'Public Speaking',
+                'Acting'            => 'Acting',
+                'Others'            => 'Others:',
             ],
-            'allows_null' => false,
-            'default' => 'Good',
             'tab' => 'Scholastic Information',
-            'wrapper' => ['class' => 'form-group col-md-6'],
         ]);
 
         CRUD::addField([
-            'name' => 'verbalproficiency',
-            'label' => 'Verbal Proficiency',
-            'type' => 'select_from_array',
+            'name'       => 'skills_others',
+            'label'      => 'Other(s)',
+            'type'       => 'text',
+            'attributes' => [
+                'id'       => 'skills_others',
+                'disabled' => 'disabled', // start disabled
+            ],
+            'tab'     => 'Scholastic Information',
+            'wrapper' => ['class' => 'form-group col-md-12'],
+        ]);
+
+        // Custom Script to toggle the above input
+        CRUD::addField([
+            'name'  => 'custom_script_skills',
+            'type'  => 'custom_html',
+            'value' => '<script>
+            function toggleSkillsOthersInput() {
+                const checkboxes = document.querySelectorAll(".checklist-options-container input[type=checkbox]");
+                const othersInput = document.getElementById("skills_others");
+
+                let checkedValues = Array.from(checkboxes)
+                    .filter(cb => cb.checked)
+                    .map(cb => cb.value);
+
+                const selectedThreeOrMore = checkedValues.length >= 3;
+                const selectedOthers = checkedValues.includes("Others");
+
+                if (selectedThreeOrMore || selectedOthers) {
+                    othersInput.disabled = false;
+                    othersInput.style.cursor = "text";
+                } else {
+                    othersInput.disabled = true;
+                    othersInput.style.cursor = "not-allowed";
+                    othersInput.value = "";
+                }
+            }
+
+            document.addEventListener("DOMContentLoaded", function () {
+                toggleSkillsOthersInput();
+                const checkboxes = document.querySelectorAll(".checklist-options-container input[type=checkbox]");
+                checkboxes.forEach(cb => cb.addEventListener("change", toggleSkillsOthersInput));
+            });
+            </script>',
+            'tab' => 'Scholastic Information',
+        ]);
+
+        CRUD::addField([
+            'name'    => 'reading_writing',
+            'label'   => 'Reading & Writing Skills',
+            'type'    => 'select_from_array',
             'options' => [
-                'Good' => 'Good',
-                'Fair' => 'Fair',
+                'Good'    => 'Good',
+                'Fair'    => 'Fair',
                 'Limited' => 'Limited',
-                'None' => 'None',
+                'None'    => 'None',
             ],
             'allows_null' => false,
-            'default' => 'Good',
-            'tab' => 'Scholastic Information',
-            'wrapper' => ['class' => 'form-group col-md-6'],
+            'default'     => 'Good',
+            'tab'         => 'Scholastic Information',
+            'wrapper'     => ['class' => 'form-group col-md-6'],
+        ]);
+
+        CRUD::addField([
+            'name'    => 'verbalproficiency',
+            'label'   => 'Verbal Proficiency',
+            'type'    => 'select_from_array',
+            'options' => [
+                'Good'    => 'Good',
+                'Fair'    => 'Fair',
+                'Limited' => 'Limited',
+                'None'    => 'None',
+            ],
+            'allows_null' => false,
+            'default'     => 'Good',
+            'tab'         => 'Scholastic Information',
+            'wrapper'     => ['class' => 'form-group col-md-6'],
         ]);
 
         // Major Language Select Field
         CRUD::addField([
-            'name' => 'majorlanguages',
-            'label' => 'Major language used at home',
-            'type' => 'select_from_array',
+            'name'    => 'majorlanguages',
+            'label'   => 'Major language used at home',
+            'type'    => 'select_from_array',
             'options' => [
                 'Tagalog/Filipino' => 'Tagalog/Filipino',
-                'English' => 'English',
-                'Korean' => 'Korean',
-                'Chinese' => 'Chinese',
-                'Japanese' => 'Japanese',
-                'Arabic' => 'Arabic',
-                'Other' => 'Other',
+                'English'          => 'English',
+                'Korean'           => 'Korean',
+                'Chinese'          => 'Chinese',
+                'Japanese'         => 'Japanese',
+                'Arabic'           => 'Arabic',
+                'Other'            => 'Other',
             ],
             'allows_null' => false,
-            'default' => 'Tagalog/Filipino',
-            'tab' => 'Scholastic Information',
-            'wrapper' => ['class' => 'form-group col-md-6'],
-            'attributes' => ['id' => 'major-language-select'],
+            'default'     => 'Tagalog/Filipino',
+            'tab'         => 'Scholastic Information',
+            'wrapper'     => ['class' => 'form-group col-md-6'],
+            'attributes'  => ['id' => 'major-language-select'],
         ]);
 
         CRUD::addField([
-            'name' => 'other_language_specify',
-            'label' => 'Specify Other Language:',
-            'type' => 'text',
-            'tab' => 'Scholastic Information',
+            'name'    => 'other_language_specify',
+            'label'   => 'Specify Other Language:',
+            'type'    => 'text',
+            'tab'     => 'Scholastic Information',
             'wrapper' => [
                 'class' => 'form-group col-md-6',
             ],
             'attributes' => [
-                'id' => 'other-language-input',
-                'disabled' => 'disabled',
-                'style' => 'cursor: not-allowed;',
+                'id'          => 'other-language-input',
+                'disabled'    => 'disabled',
+                'style'       => 'cursor: not-allowed;',
                 'placeholder' => 'Ex. Brtish, French, etc.',
             ],
         ]);
 
         CRUD::addField([
-            'name' => 'otherlanguages',
-            'label' => 'Other languages/dialects spoken',
-            'type' => 'repeatable',
-            'fields' => [
-                [
-                    'name' => 'language_name',
-                    'type' => 'text',
-                    'label' => 'Language/Dialect',
-                    'wrapper' => ['class' => 'form-group col-md-12'],
-                ],
-            ],
-            'otherlanguages' => 'Add Language/Dialect',
-            'init_rows' => 1,
-            'min_rows' => 1,
+            'name'  => 'custom_script',
+            'type'  => 'custom_html',
+            'value' => '<script>
+            function toggleOtherLanguageField() {
+                const select = document.getElementById("major-language-select");
+                const otherInput = document.getElementById("other-language-input");
+
+                if (select && otherInput) {
+                    if (select.value === "Other") {
+                        otherInput.removeAttribute("disabled");
+                        otherInput.style.cursor = "text";
+                    } else {
+                        otherInput.setAttribute("disabled", "disabled");
+                        otherInput.style.cursor = "not-allowed";
+                        otherInput.value = "";
+                    }
+                }
+            }
+
+            document.addEventListener("DOMContentLoaded", function () {
+                toggleOtherLanguageField();
+                const select = document.getElementById("major-language-select");
+                if (select) {
+                    select.addEventListener("change", toggleOtherLanguageField);
+                }
+            });
+            </script>',
             'tab' => 'Scholastic Information',
+        ]);
+
+        CRUD::addField([
+            'name'    => 'otherlanguages',
+            'label'   => 'Other languages/dialects spoken',
+            'type'    => 'table',
+            'columns' => [
+                'otherlanguages' => 'List below',
+            ],
+            'entity_singular' => 'line',
+            'min'             => 1,
+            // 'max' => 10, // optional
+            'tab'     => 'Scholastic Information',
             'wrapper' => ['class' => 'form-group col-md-12'],
         ]);
 
         CRUD::addField([
-            'name' => 'custom_script',
-            'type' => 'custom_html',
-            'value' => '<script>
-        function toggleOtherLanguageField() {
-            const select = document.getElementById("major-language-select");
-            const otherInput = document.getElementById("other-language-input");
-
-            if (select && otherInput) {
-                if (select.value === "Other") {
-                    otherInput.removeAttribute("disabled");
-                    otherInput.style.cursor = "text";
-                } else {
-                    otherInput.setAttribute("disabled", "disabled");
-                    otherInput.style.cursor = "not-allowed";
-                    otherInput.value = "";
-                }
-            }
-        }
-
-        document.addEventListener("DOMContentLoaded", function () {
-            toggleOtherLanguageField();
-            const select = document.getElementById("major-language-select");
-            if (select) {
-                select.addEventListener("change", toggleOtherLanguageField);
-            }
-        });
-    </script>',
-            'tab' => 'Scholastic Information',
+            'name'    => 'remedialhelp',
+            'label'   => 'List any participation in advanced level classes (i.e., Advanced Math, Gifted or Talented, Gateway, Writing, etc.)',
+            'type'    => 'table',
+            'columns' => [
+                'remedialhelp' => 'List below',
+            ],
+            'entity_singular' => 'line',
+            'min'             => 1,
+            // 'max' => 10, // optional
+            'tab'     => 'Scholastic Information',
+            'wrapper' => ['class' => 'form-group col-md-12'],
         ]);
 
         CRUD::addField([
-            'name' => 'remedialhelpexplanation',
+            'name'  => 'remedialhelpexplanation',
             'label' => 'Please explain and provide latest testing results.',
-            'type' => 'textarea',
-            'tab' => 'Scholastic Information',
+            'type'  => 'textarea',
+            'tab'   => 'Scholastic Information',
             // 'wrapper' => ['class' => 'form-group col-md-6'],
         ]);
 
         CRUD::addField([
-            'name' => 'otherinfo',
-            'label' => 'Are there any other information you think the teacher should know about your child?',
-            'type' => 'radio',
+            'name'    => 'otherinfo',
+            'label'   => 'Are there any other information you think the teacher should know about your child?',
+            'type'    => 'radio',
             'options' => [
                 1 => 'Yes',
                 0 => 'No',
@@ -1339,9 +1503,9 @@ class StudentCrudController extends CrudController
         ]);
 
         CRUD::addField([
-            'name' => 'disciplinaryproblem',
-            'label' => 'Has your child ever been asked to leave school because of any behavioral/disciplinary problems?',
-            'type' => 'radio',
+            'name'    => 'disciplinaryproblem',
+            'label'   => 'Has your child ever been asked to leave school because of any behavioral/disciplinary problems?',
+            'type'    => 'radio',
             'options' => [
                 1 => 'Yes',
                 0 => 'No',
@@ -1395,5 +1559,4 @@ class StudentCrudController extends CrudController
             $this->crud->setRequest($request);
         }
     }
-
 }
